@@ -1,0 +1,28 @@
+# Virtual environments
+.venv/
+venv/
+ENV/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+dist/
+build/
+
+# Local session/token cache — NEVER commit (contains live auth material)
+.danta-mcp/
+*token*.json
+*cookies*.json
+dt_token.json
+
+# Editors / OS
+.vscode/
+.idea/
+*.swp
+.DS_Store
+Thumbs.db
+
+# Local config that may hold personal paths
+local_config.json
