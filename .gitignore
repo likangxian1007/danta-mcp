@@ -26,3 +26,10 @@ Thumbs.db
 
 # Local config that may hold personal paths
 local_config.json
+
+# Generated reports (may contain personal context)
+*.html
+
+# Local scratch
+_*.py
+_*.json

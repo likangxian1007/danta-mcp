@@ -125,7 +125,7 @@ Verify:
 Expected:
 
 ```
-✅ handshake OK — 9 tools registered:
+✅ handshake OK — 10 tools registered:
    • search_courses
    ...
 ✅ Connection OK
@@ -250,6 +250,26 @@ Browse by division:
 | 5 | 交易 | Non-commercial classifieds |
 
 ### Diagnostics
+
+#### `build_citation_report(title, queries, summary_markdown="", per_query=6)`
+Generate a **self-contained HTML citation report** on your Desktop.
+
+Every quote keeps its provenance: hole id (clickable), floor number, author
+alias, timestamp, likes, and the **raw original text**. Built for auditability —
+you can check line by line whether the AI over-interpreted anything.
+
+```
+build_citation_report(
+  title="Fudan intl dorm - how to write your delivery address",
+  queries="North station::北区 菜鸟驿站|SF and JD::顺丰 京东 本部|hole:692300::how to write",
+  summary_markdown="<p>Your conclusion here</p>"
+)
+```
+
+Separate source groups with `|`, each formatted `Heading::keyword`;
+`hole:<id>` cites every floor of one thread.
+
+Responsive, auto dark-mode, all forum content HTML-escaped (injection-safe).
 
 #### `check_connection()`
 Checks WebVPN session, token, and account. Run this first when something breaks.

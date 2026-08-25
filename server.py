@@ -349,6 +349,73 @@ def get_course_reviews(course_group_id: int, max_reviews: int = 12) -> str:
 
 # ==========================================================================
 @mcp.tool()
+def build_citation_report(title: str, queries: str, summary_markdown: str = "",
+                          per_query: int = 6, open_after: bool = False) -> str:
+    """把树洞检索结果生成一份带完整出处的 HTML 引证报告（可在浏览器打开）。
+
+    每条引用都保留洞号、楼层、匿名昵称、时间、点赞数，并附可点击的溯源链接，
+    方便人工核对 AI 的结论有没有过度解读。
+
+    参数:
+      title            报告标题，例如 "复旦留学生宿舍 · 快递地址怎么填"
+      queries          检索式，多组用 | 分隔。每组可写成 "小节标题::关键词"
+                       例如 "北区驿站地址::北区 菜鸟驿站|顺丰京东::顺丰 京东 本部"
+                       也可以直接给洞号 "hole:692300::地址怎么写"
+      summary_markdown 可选，写在报告顶部的结论（支持简单 HTML）
+      per_query        每组检索取多少条
+
+    返回生成的文件路径。
+    """
+    import html as _html
+    from pathlib import Path
+    from report import build_report
+
+    try:
+        c = client()
+        sections: list[tuple[str, str, list]] = []
+        for raw in [q.strip() for q in queries.split("|") if q.strip()]:
+            heading, _, term = raw.partition("::")
+            if not term:
+                heading, term = raw, raw
+            heading, term = heading.strip(), term.strip()
+
+            if term.startswith("hole:"):
+                hid = int(term.split(":", 1)[1])
+                rows = _as_list(c.floors(hid, start=0, length=per_query))
+                sub = f"树洞 #{hid}"
+            else:
+                rows = _as_list(c.search_floors(term, length=per_query))
+                sub = f"检索关键词「{term}」"
+            sections.append((heading, sub, rows))
+
+        if not sections:
+            return "❌ queries 为空，无法生成报告。"
+
+        summary = (f'<div class="card"><h2>📝 结论</h2>{summary_markdown}</div>'
+                   if summary_markdown else "")
+        doc = build_report(title, summary, sections)
+
+        safe = re.sub(r'[\\/:*?"<>|]', "_", title)[:60]
+        path = Path.home() / "Desktop" / f"{safe}.html"
+        try:
+            path.write_text(doc, encoding="utf-8")
+        except OSError:
+            path = Path.cwd() / f"{safe}.html"
+            path.write_text(doc, encoding="utf-8")
+
+        if open_after:
+            import webbrowser
+            webbrowser.open(path.as_uri())
+
+        n = sum(len(s[2]) for s in sections)
+        detail = "\n".join(f"  {len(fl):2d} 条 · {h}" for h, _, fl in sections)
+        return (f"✅ 报告已生成：{path}\n"
+                f"共引用 {n} 条原始发言，{len(sections)} 个来源分组：\n{detail}")
+    except Exception as e:
+        return _err(e)
+
+
+@mcp.tool()
 def check_connection() -> str:
     """检查旦挞连接状态：WebVPN 会话、登录 token、账号信息。排障用。"""
     try:

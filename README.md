@@ -122,7 +122,7 @@ python3 -m venv .venv
 应看到：
 
 ```
-✅ handshake OK — 9 tools registered:
+✅ handshake OK — 10 tools registered:
    • search_courses
    ...
 ✅ 连接正常
@@ -243,6 +243,25 @@ search_courses("微积分")
 | 5 | 交易 | 非商业广告 |
 
 ### 排障
+
+#### `build_citation_report(title, queries, summary_markdown="", per_query=6)`
+把检索结果生成一份**带完整出处的 HTML 引证报告**，保存到桌面，浏览器打开即可。
+
+每条引用保留：洞号（可点击溯源）、楼层、匿名昵称、时间、点赞数、**原文照登**。
+适合需要人工核对结论的场景 —— 你可以逐条检查 AI 有没有过度解读。
+
+```
+build_citation_report(
+  title="复旦留学生宿舍 · 快递地址怎么填",
+  queries="北区驿站::北区 菜鸟驿站|顺丰京东::顺丰 京东 本部|hole:692300::地址怎么写",
+  summary_markdown="<p>结论写在这里</p>"
+)
+```
+
+`queries` 用 `|` 分隔多个来源分组，每组格式 `小节标题::关键词`；
+也支持 `hole:洞号` 直接引用整个树洞的所有楼层。
+
+报告特性：响应式布局、自动适配深色模式、内容全部 HTML 转义（防注入）。
 
 #### `check_connection()`
 检查 WebVPN 会话、token、账号状态。出问题时先跑这个。
