@@ -408,6 +408,13 @@ WebVPN 不稳（它的根路径 `/` 经常超时）。稍等重试即可。
 
 ---
 
+## 联系
+
+问题、建议或 bug 反馈：likangxian1007@gmail.com
+或在 [Issues](https://github.com/likangxian1007/danta-mcp/issues) 提出。
+
+---
+
 ## 许可证
 
 **GPL-3.0** — 详见 [LICENSE](./LICENSE)。

@@ -416,6 +416,13 @@ Re-enter credentials.
 
 ---
 
+## Contact
+
+Questions, suggestions, or bug reports: likangxian1007@gmail.com
+or open an [issue](https://github.com/likangxian1007/danta-mcp/issues).
+
+---
+
 ## License
 
 **GPL-3.0** — see [LICENSE](./LICENSE).
