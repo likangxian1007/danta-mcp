@@ -424,8 +424,6 @@ The WebVPN encryption scheme and UIS login flow are derived from
 [DanXi-Dev/DanXi](https://github.com/DanXi-Dev/DanXi) (GPL-3.0). Under the GPL's
 copyleft terms this project must be released under the same license.
 
-This project is not affiliated with Fudan University or the DanXi development team.
-
 ---
 
 ## Disclaimer

@@ -414,8 +414,6 @@ WebVPN 不稳（它的根路径 `/` 经常超时）。稍等重试即可。
 
 本项目的 WebVPN 加密方案与 UIS 登录流程衍生自 [DanXi-Dev/DanXi](https://github.com/DanXi-Dev/DanXi)（GPL-3.0）。依据 GPL 传染性条款，本项目必须以相同许可证发布。
 
-本项目与复旦大学、旦挞开发团队均无隶属关系。
-
 ---
 
 ## 免责声明
