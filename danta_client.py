@@ -413,12 +413,6 @@ class DantaClient:
     def divisions(self):
         return self.api("GET", f"{FORUM_BASE}/divisions")
 
-    def list_holes(self, division_id=1, length=10, start_time=None):
-        p = {"division_id": division_id, "length": length}
-        if start_time:
-            p["start_time"] = start_time
-        return self.api("GET", f"{FORUM_BASE}/holes", params=p)
-
     def hole(self, hole_id: int):
         return self.api("GET", f"{FORUM_BASE}/holes/{hole_id}")
 
@@ -426,9 +420,27 @@ class DantaClient:
         return self.api("GET", f"{FORUM_BASE}/floors",
                         params={"hole_id": hole_id, "start_floor": start, "length": length})
 
-    def search_floors(self, keyword: str, start=0, length=30):
-        return self.api("GET", f"{FORUM_BASE}/floors/search",
-                        params={"search": keyword, "start_floor": start, "length": length})
+    def search_floors(self, keyword: str, start=0, length=30,
+                      accurate=False, start_time=None, end_time=None):
+        p = {"search": keyword, "offset": start, "size": length}
+        if accurate:
+            p["accurate"] = "true"
+        if start_time:
+            p["start_time"] = int(start_time)
+        if end_time:
+            p["end_time"] = int(end_time)
+        return self.api("GET", f"{FORUM_BASE}/floors/search", params=p)
+
+    def tags(self):
+        return self.api("GET", f"{FORUM_BASE}/tags")
+
+    def list_holes(self, division_id=1, length=10, start_time=None, tag=None):
+        p = {"division_id": division_id, "length": length}
+        if start_time:
+            p["start_time"] = start_time
+        if tag:
+            p["tag"] = tag
+        return self.api("GET", f"{FORUM_BASE}/holes", params=p)
 
     def me(self):
         return self.api("GET", f"{FORUM_BASE}/users/me")

@@ -42,9 +42,17 @@ async def main():
             res = await s.call_tool("search_courses", {"keyword": "微积分", "limit": 3})
             print(res.content[0].text[:500])
 
-            print("\n--- search_holes ---")
-            res = await s.call_tool("search_holes", {"keyword": "选课", "limit": 2})
-            print(res.content[0].text[:400])
+            print("\n--- search_holes (life topic) ---")
+            res = await s.call_tool("search_holes", {"keyword": "食堂", "limit": 2})
+            print(res.content[0].text[:300])
+
+            print("\n--- list_hot_tags ---")
+            res = await s.call_tool("list_hot_tags", {"limit": 8})
+            print(res.content[0].text[:300])
+
+            print("\n--- browse_by_tag ---")
+            res = await s.call_tool("browse_by_tag", {"tag": "生活", "limit": 2})
+            print(res.content[0].text[:300])
 
     print("\n✅ all checks passed")
 

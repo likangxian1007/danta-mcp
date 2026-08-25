@@ -4,7 +4,10 @@
 
 An MCP server that lets an AI agent search **Fudan University's Tree Hole forum (树洞)** and **DanKe course reviews (旦克)** — including from off campus.
 
-Built for course selection: instead of paging through reviews by hand, just ask your AI "is this course worth taking?" and let it search, read, and summarize.
+The Tree Hole is Fudan's anonymous student community: daily life, relationships,
+job hunting, mental health, major transfers, second-hand goods — everything.
+This tool lets your AI find, read, and summarize that lived experience instead
+of you scrolling page by page.
 
 ```
 You: What's 高等微积分Ⅰ (Advanced Calculus I) like?
@@ -39,15 +42,18 @@ AI: (auto-calls search_courses → get_course_reviews)
 
 Ask in natural language; the AI picks the tools.
 
-| Goal | Just say |
+| Scenario | Just say |
 |---|---|
-| Research a course | "Is 高等微积分Ⅰ worth taking?" |
-| Compare courses | "Compare the reviews for these three gen-ed courses" |
-| Check an instructor | "Search the tree hole for opinions on Prof. Yan Jinhai" |
-| Find selection tips | "What do people say about picking PE classes?" |
-| Read a full thread | "Read all replies in hole #697119" |
+| 🍜 Campus life | "Which dining hall is best?" "How do I get the dorm AC fixed?" |
+| 💔 Relationships | "How do people here handle long-distance relationships?" |
+| 💼 Careers | "Any recent internship referrals?" "How's the job market for CS here?" |
+| 🧠 Mental health | "How do people cope with start-of-term anxiety?" |
+| 🔄 Academics | "How hard is transferring majors, per people who did it?" |
+| 👥 Social | "How do I find people to hang out with?" "Are clubs worth joining?" |
+| 💰 Marketplace | "What do used e-bikes go for?" "Any flatshare listings?" |
+| 📚 Courses | "Is 高等微积分Ⅰ worth taking?" "Compare these three gen-eds" |
 
-Data comes from **DanKe** (structured ratings + long-form student reviews) and the **Fudan Tree Hole** (live discussion).
+Data sources: the **Fudan Tree Hole** (live anonymous discussion, 23,000+ topic tags) and **DanKe** (structured ratings + long-form student reviews).
 
 ---
 
@@ -119,7 +125,7 @@ Verify:
 Expected:
 
 ```
-✅ handshake OK — 7 tools registered:
+✅ handshake OK — 9 tools registered:
    • search_courses
    ...
 ✅ Connection OK
@@ -151,6 +157,57 @@ Restart the client.
 ---
 
 ## Tools
+
+### Tree Hole search (general — any topic)
+
+#### `search_holes(keyword, limit=15, accurate=False, within_days=0)`
+Full-text search across the forum. **This is the workhorse tool.**
+
+```
+search_holes("食堂")                      # fuzzy search
+search_holes("转专业", accurate=True)      # exact match
+search_holes("实习", within_days=14)       # last two weeks only
+```
+
+- `accurate=True` — exact match; good for proper nouns, course codes, names
+- `within_days=N` — recent content only; good for internships, current policy
+
+#### `get_hole(hole_id, limit=40)`
+Read every floor of a thread.
+
+**The value is usually in the replies** — someone asks, others share experience.
+Always read the full thread once a search hit looks relevant.
+
+#### `browse_by_tag(tag, limit=15)`
+Browse recent threads under a topic tag. Better than keyword search for
+"just show me what's happening in X".
+
+Common tags: `提问`(questions) `求助`(help) `生活`(life) `学习`(study)
+`恋爱`(dating) `情感`(feelings) `吐槽`(venting) `emo` `交友`(making friends)
+`选课`(course selection) `转专业`(major transfer) `保研`(grad school)
+`二手交易`(second-hand) `找搭子`(finding companions)
+
+#### `list_hot_tags(limit=40, keyword="")`
+List the hottest topic tags, optionally filtered.
+
+```
+list_hot_tags()                  # what is everyone talking about
+list_hot_tags(keyword="实习")     # all internship-related tags
+```
+
+There are 23,000+ tags. Hottest: 提问 (183k), 求助氵 (95k), 生活 (74k),
+学习 (60k), 恋爱 (37k), 吐槽 (23k), emo (18k).
+
+#### `browse_division(division_id, limit=15)` / `list_divisions()`
+Browse by division:
+
+| ID | Division | Notes |
+|---|---|---|
+| **1** | **茶楼** | **Main board — anything goes; the default** |
+| 2 | 圆桌 | In-depth discussion |
+| 3 | 评教 | Course evaluation |
+| 4 | 站务 | Site admin |
+| 5 | 交易 | Second-hand / flatshare |
 
 ### Course reviews (DanKe)
 
