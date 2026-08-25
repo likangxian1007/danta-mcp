@@ -416,19 +416,15 @@ Re-enter credentials.
 
 ---
 
-## Credits
-
-The WebVPN encryption scheme and UIS login flow are derived from [DanXi-Dev/DanXi](https://github.com/DanXi-Dev/DanXi), the official DanTa client (GPL-3.0). Thanks to the DanXi team.
-
-This project is not affiliated with Fudan University or the DanXi development team.
-
----
-
 ## License
 
-**GPL-3.0**
+**GPL-3.0** — see [LICENSE](./LICENSE).
 
-This project reuses core logic from DanXi (GPL-3.0); under the GPL's copyleft terms it must be released under the same license. See [LICENSE](./LICENSE).
+The WebVPN encryption scheme and UIS login flow are derived from
+[DanXi-Dev/DanXi](https://github.com/DanXi-Dev/DanXi) (GPL-3.0). Under the GPL's
+copyleft terms this project must be released under the same license.
+
+This project is not affiliated with Fudan University or the DanXi development team.
 
 ---
 

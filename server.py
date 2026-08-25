@@ -16,7 +16,6 @@ version. See <https://www.gnu.org/licenses/gpl-3.0.html>.
 """
 from __future__ import annotations
 
-import json
 import re
 import time
 from typing import Any
@@ -28,7 +27,7 @@ except ModuleNotFoundError:
     from mcp.server.mcpserver import MCPServer as _Server  # SDK 2.x
 
 from danta_client import (
-    DantaClient, DantaError, CaptchaRequired, CredentialsInvalid,
+    DantaClient, CaptchaRequired, CredentialsInvalid,
 )
 
 mcp = _Server("danta")
@@ -366,7 +365,6 @@ def build_citation_report(title: str, queries: str, summary_markdown: str = "",
 
     返回生成的文件路径。
     """
-    import html as _html
     from pathlib import Path
     from report import build_report
 
@@ -395,13 +393,11 @@ def build_citation_report(title: str, queries: str, summary_markdown: str = "",
                    if summary_markdown else "")
         doc = build_report(title, summary, sections)
 
-        safe = re.sub(r'[\\/:*?"<>|]', "_", title)[:60]
-        path = Path.home() / "Desktop" / f"{safe}.html"
-        try:
-            path.write_text(doc, encoding="utf-8")
-        except OSError:
-            path = Path.cwd() / f"{safe}.html"
-            path.write_text(doc, encoding="utf-8")
+        safe = re.sub(r'[\\/:*?"<>|]', "_", title).strip()[:60] or "report"
+        outdir = Path(__file__).resolve().parent / "reports"
+        outdir.mkdir(exist_ok=True)
+        path = outdir / f"{safe}.html"
+        path.write_text(doc, encoding="utf-8")
 
         if open_after:
             import webbrowser

@@ -408,19 +408,13 @@ WebVPN 不稳（它的根路径 `/` 经常超时）。稍等重试即可。
 
 ---
 
-## 致谢
-
-本项目的 WebVPN 加密方案与 UIS 登录流程参考自 [DanXi-Dev/DanXi](https://github.com/DanXi-Dev/DanXi)（旦挞官方客户端，GPL-3.0）。感谢旦挞团队。
-
-本项目与复旦大学、旦挞开发团队均无隶属关系。
-
----
-
 ## 许可证
 
-**GPL-3.0**
+**GPL-3.0** — 详见 [LICENSE](./LICENSE)。
 
-本项目复用了 DanXi（GPL-3.0）的核心逻辑，依据 GPL 的传染性条款，必须以相同许可证发布。详见 [LICENSE](./LICENSE)。
+本项目的 WebVPN 加密方案与 UIS 登录流程衍生自 [DanXi-Dev/DanXi](https://github.com/DanXi-Dev/DanXi)（GPL-3.0）。依据 GPL 传染性条款，本项目必须以相同许可证发布。
+
+本项目与复旦大学、旦挞开发团队均无隶属关系。
 
 ---
 

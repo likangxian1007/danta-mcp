@@ -12,8 +12,6 @@ the terms of the GNU General Public License as published by the Free Software
 Foundation, either version 3 of the License, or (at your option) any later
 version. See <https://www.gnu.org/licenses/gpl-3.0.html>.
 """
-from __future__ import annotations
-
 import html
 import re
 import time

@@ -33,3 +33,6 @@ local_config.json
 # Local scratch
 _*.py
 _*.json
+
+# Generated reports live here (may contain personal queries)
+reports/
